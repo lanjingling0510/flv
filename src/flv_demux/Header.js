@@ -3,7 +3,7 @@ import Buffer from '../utils/Buffer';
 
 class Header extends EventEmitter {
   static get MIN_LENGTH() {
-    // The DataOffset field usually has a value of 9 for FLV version 1.
+    // DataOffset字段 已经有9个字节（for FLV version 1）
     return 9;
   }
 
@@ -34,7 +34,7 @@ class Header extends EventEmitter {
     this._version = data[3];
     this._hasAudio = ((data[4] & 4) >>> 2) !== 0;
     this._hasVideo = (data[4] & 1) !== 0;
-    this._offset = (new DataView(buffer, 5)).getInt32(0, false);
+    this._offset = Buffer.readUInt32BE(buffer, 5);
 
     // this._offset should equal flv header size.
     if (this._offset !== 9) {

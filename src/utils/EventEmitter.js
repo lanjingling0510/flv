@@ -9,7 +9,7 @@ class EventEmitter {
     }
 
     if (
-      !this._events[key].includes(listener) &&
+      !this._events[key].indexOf(listener) !== -1 &&
       typeof listener === 'function'
     ) {
       this._events[key].push(listener);

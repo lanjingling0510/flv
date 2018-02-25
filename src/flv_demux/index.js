@@ -8,8 +8,12 @@ class FlvDemux extends EventEmitter {
   constructor() {
     super();
 
+    // 当前解码的状态
     this._state = Header.STATE;
+
+    // 当前存储的buffer
     this._buffer = null;
+
     this._header = new Header();
     this._body = new Body();
 
@@ -26,8 +30,12 @@ class FlvDemux extends EventEmitter {
 
     for (;;) {
       switch (this._state) {
+
+        // 解析Header
         case Header.STATE: {
           if (this._buffer.byteLength < Header.MIN_LENGTH) {
+            // 当前buffer小于可解析的Header
+            // 请继续插入新的buffer...
             return;
           }
 
@@ -36,21 +44,27 @@ class FlvDemux extends EventEmitter {
             throw new Error('not right spec header');
           }
 
-          this.buffer = body;
+          this._buffer = body;
           this._state = Body.STATE;
           break;
         }
+
+        // 解析Body
         case Body.STATE: {
           if (this._buffer.byteLength < Body.MIN_LENGTH) {
+            // 当前buffer小于可解析的Body
+            // 请继续插入新的buffer...
             return;
           }
 
           let body = this._body.decode(this._buffer);
-          if (!body) {
+          this.buffer = body.data;
+          if (body.success) {
+            console.log('解析tag成功...');
+          } else {
             return;
           }
 
-          this.buffer = body;
           break;
         }
       }

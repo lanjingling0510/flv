@@ -1,13 +1,27 @@
 import FetchLoader from './FetchLoader';
-
+import FlvDemux from './flv_demux';
 
 // const url = '/examples/sample.flv';
-const url = 'http://58.220.18.32/flvdh.quanmin.tv/live/1874503018_L4.flv';
+// const url = 'http://flv13.quanmin.tv/live/9479324_L4.flv';
+const localUrl = '/videos/sample.flv';
 
-const fetchLoader = new FetchLoader(url);
+const fetchLoader = new FetchLoader(localUrl);
+const flvDemux = new FlvDemux();
 
 fetchLoader.open();
 
-// fetchLoader.on('dataArrival', function(data) {
-//   console.log(data);
-// });
+fetchLoader.on('dataArrival', (data) => {
+  flvDemux.decode(data.chunk);
+});
+
+flvDemux.on('header', (data) => {
+  console.log('---------  header  ------');
+  console.log(data);
+});
+
+flvDemux.on('tag', (data) => {
+  console.log('---------  tag  ------');
+  console.log(data);
+});
+
+

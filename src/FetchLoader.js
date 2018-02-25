@@ -60,6 +60,8 @@ class FetchLoader extends EventEmitter {
 
         this._pump(reader);
       }
+    }).catch(err => {
+      console.error(err);
     });
   }
 }

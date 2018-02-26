@@ -11,7 +11,7 @@ const Buffer = {
 
     let offset = 0;
     bufferlist.forEach(buffer => {
-      tmp.set(buffer, offset);
+      tmp.set(new Uint8Array(buffer), offset);
       offset = buffer.byteLength;
     });
 

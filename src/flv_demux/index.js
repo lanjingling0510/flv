@@ -58,7 +58,7 @@ class FlvDemux extends EventEmitter {
           }
 
           let body = this._body.decode(this._buffer);
-          this.buffer = body.data;
+          this._buffer = body.data;
           if (body.success) {
             console.log('解析tag成功...');
           } else {

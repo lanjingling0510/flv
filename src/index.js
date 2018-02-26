@@ -1,5 +1,5 @@
 import FetchLoader from './FetchLoader';
-import FlvDemux from './flv_demux';
+import FlvDemux from './demux';
 
 // const url = '/examples/sample.flv';
 // const url = 'http://flv13.quanmin.tv/live/9479324_L4.flv';

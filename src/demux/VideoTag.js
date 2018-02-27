@@ -1,4 +1,5 @@
 import Buffer from '../utils/Buffer';
+import Log from '../core/logger';
 
 class VideoTag {
   static get MIN_LENGTH() {
@@ -79,13 +80,13 @@ class VideoTag {
 
     switch (this.AVCPacketType) {
       case 0:
-        console.log('解析AVC sequence header...');
+        Log.v('解析AVCDecoderConfigurationRecord...');
         break;
       case 1:
-        console.log('解析AVC NALU...');
+        Log.v('解析AVC NALU数据...');
         break;
       case 2:
-        console.log('解析AVC end of sequence...');
+        Log.v('解析AVC序列尾部...');
         break;
       default:
         break;

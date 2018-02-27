@@ -4,6 +4,7 @@
   "description": "",
   "main": "webpack.config.js",
   "dependencies": {
+    "chimee-flv2fmp4": "^0.3.5",
     "ieee754": "^1.1.8"
   },
   "devDependencies": {

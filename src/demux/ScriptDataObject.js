@@ -2,6 +2,10 @@ import ScriptDataString from './ScriptDataString';
 import ScriptDataValue from './ScriptDataValue';
 
 class ScriptDataObject {
+  static get TYPE() {
+    return 3;
+  }
+
   static get MIN_LENGTH() {
     return ScriptDataString.MIN_LENGTH + ScriptDataValue.MIN_LENGTH;
   }
@@ -27,6 +31,7 @@ class ScriptDataObject {
     objectData = objectData && objectData.toJSON ? objectData.toJSON() : null;
 
     return {
+      type: ScriptDataObject.TYPE,
       objectName,
       objectData
     };

@@ -1,4 +1,5 @@
 import EventEmitter from '../utils/EventEmitter';
+import Log from '../core/logger';
 import Buffer from '../utils/Buffer';
 
 class AudioTag extends EventEmitter {
@@ -78,11 +79,11 @@ class AudioTag extends EventEmitter {
     this.originBuffer = buffer.slice(0, size);
 
     if (this.AACPacketType === 0) {
-      console.log('解析AudioSpecificConfig...');
+      Log.v('解析AudioSpecificConfig...');
       // data 是 AudioSpecificConfig
       // .....
     } else if (this.AACPacketType === 1) {
-      console.log('解析AAC frame data...');
+      Log.v('解析AAC帧数据...');
       // data 是 Raw AAC frame data
       // .....
     }

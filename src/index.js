@@ -1,28 +1,36 @@
 import FetchLoader from './FetchLoader';
-import FlvDemux from './demux';
-
-// const url = '/examples/sample.flv';
-// const url = 'http://flv13.quanmin.tv/live/9479324_L4.flv';
+import DemuxController from './DemuxController';
 
 const localUrl = '/videos/sample.flv';
 
 const fetchLoader = new FetchLoader(localUrl);
-const flvDemux = new FlvDemux();
+const demuxController = new DemuxController();
 
 fetchLoader.open();
-
+let i = 0;
 fetchLoader.on('dataArrival', (data) => {
-  flvDemux.decode(data.chunk);
+  if (i >= 3) {
+    return;
+  }
+  i++;
+  demuxController.decode(data.chunk);
 });
 
-flvDemux.on('header', (data) => {
-  console.log('---------  header  ------');
-  console.log(data);
+demuxController.on('audioMeta', meta => {
+  console.log(meta);
 });
 
-flvDemux.on('tag', (data) => {
-  console.log('---------  tag  ------');
-  console.log(data);
+demuxController.on('videoMeta', meta => {
+  console.log(meta);
 });
+
+demuxController.on('mediaInfo', mediaInfo => {
+  // console.log(mediaInfo);
+});
+
+demuxController.on('availableData', (audio, video) => {
+  console.log(audio, video);
+});
+
 
 

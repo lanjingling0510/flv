@@ -96,7 +96,7 @@ class Tag extends EventEmitter {
     const data = dataTag && dataTag.toJSON ? dataTag.toJSON() : null;
     return {
       type: this.type,
-      size: this.dataSize,
+      dataSize: this.dataSize,
       timestamp: this.timestamp,
       streamId: this.streamId,
       data: data,

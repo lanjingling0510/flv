@@ -48,11 +48,7 @@ class Body extends EventEmitter {
 
       let data = tag.toJSON();
 
-      let tagSizeBuffer = new ArrayBuffer(32);
-      let tagSizeArray = new Uint32Array(tagSizeBuffer);
-
-      tagSizeArray[0] = tagSize;
-      data.tagSizeBuffer = tagSizeArray.buffer;
+      data.previousTagSize = tagSize;
       this.emit('tag', data);
       buffer = body;
     }

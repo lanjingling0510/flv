@@ -125,7 +125,7 @@ class ScriptDataValue {
         return v && v.toJSON ? v.toJSON() : v;
       });
     } else if (value && value.toJSON) {
-      value = value.toJSON();
+      return value.toJSON();
     }
 
     let terminator = this.terminator;

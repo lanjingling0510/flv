@@ -83,7 +83,7 @@ class VideoTag {
         Log.v('解析AVCDecoderConfigurationRecord...');
         break;
       case 1:
-        Log.v('解析AVC NALU数据...');
+        // Log.v('解析AVC NALU数据...');
         break;
       case 2:
         Log.v('解析AVC序列尾部...');

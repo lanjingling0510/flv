@@ -83,7 +83,7 @@ class AudioTag extends EventEmitter {
       // data 是 AudioSpecificConfig
       // .....
     } else if (this.AACPacketType === 1) {
-      Log.v('解析AAC帧数据...');
+      // Log.v('解析AAC帧数据...');
       // data 是 Raw AAC frame data
       // .....
     }

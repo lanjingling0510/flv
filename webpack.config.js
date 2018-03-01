@@ -36,6 +36,10 @@ module.exports = {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new HtmlWebpackPlugin()
+    new HtmlWebpackPlugin({
+      title: 'qm player example',
+      template: 'examples/index.html',
+      inject: 'body'
+    })
   ]
 };

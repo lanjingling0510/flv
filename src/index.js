@@ -1,36 +1,10 @@
-import FetchLoader from './FetchLoader';
-import DemuxController from './DemuxController';
+
+import Flv from './Flv';
 
 const localUrl = '/videos/sample.flv';
+const videoDom = document.getElementById('video');
 
-const fetchLoader = new FetchLoader(localUrl);
-const demuxController = new DemuxController();
+const flv = new Flv(videoDom);
 
-fetchLoader.open();
-let i = 0;
-fetchLoader.on('dataArrival', (data) => {
-  if (i >= 3) {
-    return;
-  }
-  i++;
-  demuxController.decode(data.chunk);
-});
-
-demuxController.on('audioMeta', meta => {
-  console.log(meta);
-});
-
-demuxController.on('videoMeta', meta => {
-  console.log(meta);
-});
-
-demuxController.on('mediaInfo', mediaInfo => {
-  // console.log(mediaInfo);
-});
-
-demuxController.on('availableData', (audio, video) => {
-  console.log(audio, video);
-});
-
-
+flv.load(localUrl);
 

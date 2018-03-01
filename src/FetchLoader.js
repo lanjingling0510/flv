@@ -9,15 +9,17 @@ const Status = {
 };
 
 class FetchLoader extends EventEmitter {
-  constructor(url) {
+  constructor() {
     super();
 
-    this._url = url;
+    this._url = '';
     this._receivedLength = 0;
     this._status = Status.Idle;
   }
 
-  open() {
+  open(url) {
+    this._url = url;
+
     let params = {
       method: 'GET',
       mode: 'cors',

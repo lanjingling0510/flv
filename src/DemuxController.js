@@ -52,7 +52,7 @@ class DemuxController extends EventEmitter {
     this._demux.on('tag', this.onFlvTag.bind(this));
   }
 
-  decode(buffer) {
+  demux(buffer) {
     this._demux.decode(buffer);
   }
 

@@ -10,7 +10,7 @@ class RemuxController extends EventEmitter {
   constructor(config) {
     super();
     this._config = config;
-    this._isLive = (config.isLive === true) ? true : false;
+    this._isLive = config.isLive === true ? true : false;
 
     this._audioMeta = null;
     this._videoMeta = null;
@@ -225,6 +225,20 @@ class RemuxController extends EventEmitter {
     // lastDts = latest.originalDts + latest.duration;
     lastPts = latest.pts + latest.duration;
     this._videoNextDts = lastDts;
+
+    // console.log(
+    //   'dtsCorrection',
+    //   dtsCorrection,
+    //   'firstSampleOriginalDts',
+    //   firstSampleOriginalDts,
+    //   '_dtsBase',
+    //   this._dtsBase,
+    //   'this._videoNextDts',
+    //   this._videoNextDts,
+    //   'latest.dts',
+    //   latest.dts,
+    //   latest.originalDts
+    // );
 
     // fill media segment info & add to info list
     info.beginDts = firstDts;
@@ -467,7 +481,19 @@ class RemuxController extends EventEmitter {
     // console.log(latest.dts,latest.originalDts);
     // lastDts = latest.originalDts + latest.duration;
     this._audioNextDts = lastDts;
-    // console.log('dtsCorrection',dtsCorrection,'firstSampleOriginalDts',firstSampleOriginalDts,'_dtsBase',this._dtsBase,'this._audioNextDts',this._audioNextDts,'latest.dts',latest.dts,latest.originalDts)
+    // console.log(
+    //   'dtsCorrection',
+    //   dtsCorrection,
+    //   'firstSampleOriginalDts',
+    //   firstSampleOriginalDts,
+    //   '_dtsBase',
+    //   this._dtsBase,
+    //   'this._audioNextDts',
+    //   this._audioNextDts,
+    //   'latest.dts',
+    //   latest.dts,
+    //   latest.originalDts
+    // );
 
     // fill media segment info & add to info list
     let info = new MediaSegmentInfo();

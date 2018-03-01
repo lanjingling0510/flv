@@ -9,14 +9,14 @@ const Log = {
       tag = Log.GLOBAL_TAG;
     }
 
-    if (typeof msg === 'object') {
-      msg = JSON.stringify(msg, null, 2);
-    }
+    // if (typeof msg === 'object') {
+    //   msg = JSON.stringify(msg, null, 2);
+    // }
 
     let str = `[${tag}] > ${msg}`;
     this.fire('info', str);
     if (Log.ENABLE_VERBOSE) {
-      console.log(' %c%s', 'color: brown; font-weight: bold; text-decoration: underline;', str);
+      console.log(' %c%s', 'color: brown; font-weight: bold; text-decoration: underline;', tag, msg);
     }
   },
 

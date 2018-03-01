@@ -5,7 +5,7 @@ const Status = {
   Connecting: 1,
   Buffering: 2,
   Error: 3,
-  Complete: 4,
+  Complete: 4
 };
 
 class FetchLoader extends EventEmitter {
@@ -15,6 +15,7 @@ class FetchLoader extends EventEmitter {
     this._url = '';
     this._receivedLength = 0;
     this._status = Status.Idle;
+    this.requestAbort = false;
   }
 
   open(url) {
@@ -24,7 +25,7 @@ class FetchLoader extends EventEmitter {
       method: 'GET',
       mode: 'cors',
       cache: 'default',
-      referrerPolicy: 'no-referrer-when-downgrade',
+      referrerPolicy: 'no-referrer-when-downgrade'
     };
 
     this._status = Status.Connecting;
@@ -43,28 +44,39 @@ class FetchLoader extends EventEmitter {
       });
   }
 
+  pause() {
+    this.requestAbort = true;
+  }
+
   _pump(reader) {
     // ReadableStreamReader
-    return reader.read().then(result => {
-      if (result.done) {
-        this._status = Status.Complete;
-      } else {
-        this._status = Status.Buffering;
-        let chunk = result.value.buffer;
-        let byteStart =  this._receivedLength;
-        this._receivedLength += chunk.byteLength;
+    return reader
+      .read()
+      .then(result => {
+        if (result.done) {
+          this._status = Status.Complete;
+        } else {
+          if (this.requestAbort === true) {
+            this.requestAbort = false;
+            return reader.cancel();
+          }
+          this._status = Status.Buffering;
+          let chunk = result.value.buffer;
+          let byteStart = this._receivedLength;
+          this._receivedLength += chunk.byteLength;
 
-        this.emit('dataArrival', {
-          chunk: chunk,
-          byteStart: byteStart,
-          byteLength: chunk.byteLength,
-        });
+          this.emit('dataArrival', {
+            chunk: chunk,
+            byteStart: byteStart,
+            byteLength: chunk.byteLength
+          });
 
-        this._pump(reader);
-      }
-    }).catch(err => {
-      console.error(err);
-    });
+          this._pump(reader);
+        }
+      })
+      .catch(err => {
+        console.error(err);
+      });
   }
 }
 

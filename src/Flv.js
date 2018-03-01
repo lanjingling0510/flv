@@ -16,6 +16,7 @@ class Flv extends EventEmitter {
     this.mseController = new MSEController(this.video, this.config);
 
     this._bindEvent();
+    this._bindMseEvent();
   }
 
   load(src) {
@@ -40,6 +41,13 @@ class Flv extends EventEmitter {
     this.transmuxer.on('mediaInfo', mediaInfo => {
       mse.init(mediaInfo);
       this.video.src = URL.createObjectURL(mse.mediaSource);
+    });
+  }
+
+  _bindMseEvent() {
+    const mse = this.mseController;
+    mse.on('error', () => {
+      this.fetchLoader.pause();
     });
   }
 

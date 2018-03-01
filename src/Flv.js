@@ -1,7 +1,7 @@
 import EventEmitter from './utils/EventEmitter';
-import MSEController from './MSEController';
-import FetchLoader from './FetchLoader';
-import Transmuxer from './Transmuxer';
+import MSEController from './core/MSEController';
+import FetchLoader from './core/FetchLoader';
+import Transmuxer from './core/Transmuxer';
 import defaultConfig from './config';
 
 class Flv extends EventEmitter {

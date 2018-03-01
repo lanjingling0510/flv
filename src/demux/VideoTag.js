@@ -1,5 +1,5 @@
 import Buffer from '../utils/Buffer';
-import Log from '../core/logger';
+import Log from '../utils/logger';
 
 class VideoTag {
   static get MIN_LENGTH() {

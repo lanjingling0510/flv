@@ -1,5 +1,5 @@
 import EventEmitter from '../utils/EventEmitter';
-import Log from '../core/logger';
+import Log from '../utils/logger';
 import Buffer from '../utils/Buffer';
 
 class AudioTag extends EventEmitter {

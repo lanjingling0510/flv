@@ -43,10 +43,6 @@ class RemuxController extends EventEmitter {
   }
 
   generateInitSegment(meta) {
-    if (meta.constructor != Array) {
-      meta = [meta];
-    }
-
     const ftyp = MP4.ftyp();
     const moov = MP4.moov(meta);
 

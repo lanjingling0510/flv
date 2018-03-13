@@ -89,13 +89,13 @@ class Transmuxer extends EventEmitter {
     if (this.metas.length > 1) {
       this.metas.map(item => {
         if (item.type == 'video') {
-          this.ftyp_moov_v = remux.generateInitSegment([item]);
+          this.ftyp_moov_v = remux.generateInitSegment(item);
         } else {
-          this.ftyp_moov_a = remux.generateInitSegment([item]);
+          this.ftyp_moov_a = remux.generateInitSegment(item);
         }
       });
     } else {
-      this.ftyp_moov = remux.generateInitSegment([this.metas[0]]);
+      this.ftyp_moov = remux.generateInitSegment(this.metas[0]);
     }
 
     if (this.loadmetadata == false) {

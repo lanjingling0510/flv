@@ -38,15 +38,10 @@ class MP4 {
 
   // Movie metadata box
   static moov(meta) {
-      const mvhd = MP4.mvhd(meta[0].timescale, meta[0].duration); // /moov里面的第一个box
-      const vtrak = MP4.trak(meta[0]);
-      let atrak;
-      if (meta.length > 1) {
-          atrak = MP4.trak(meta[1]);
-      }
-
-      const mvex = MP4.mvex(meta);
-      if (meta.length > 1) { return MP4.box(MP4.types.moov, mvhd, vtrak, atrak, mvex); } else { return MP4.box(MP4.types.moov, mvhd, vtrak, mvex); }
+    let mvhd = MP4.mvhd(meta.timescale, meta.duration);
+    let trak = MP4.trak(meta);
+    let mvex = MP4.mvex(meta);
+    return MP4.box(MP4.types.moov, mvhd, trak, mvex);
   }
 
   // Movie header box
@@ -394,7 +389,7 @@ class MP4 {
 
   // Movie Extends box
   static mvex(meta) {
-      if (meta.length > 1) { return MP4.box(MP4.types.mvex, MP4.trex(meta[0]), MP4.trex(meta[1])); } else { return MP4.box(MP4.types.mvex, MP4.trex(meta[0])); }
+    return MP4.box(MP4.types.mvex, MP4.trex(meta));
   }
 
   // Track Extends box

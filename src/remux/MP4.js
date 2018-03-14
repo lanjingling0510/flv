@@ -291,23 +291,23 @@ class MP4 {
   }
 
   static mp4a(meta) {
-      const channelCount = meta.channelCount;
-      const sampleRate = meta.audioSampleRate;
+    const channelCount = meta.channelCount;
+    const sampleRate = meta.audioSampleRate;
 
-      const data = new Uint8Array([
-          0x00, 0x00, 0x00, 0x00, // reserved(4) 6个字节，设置为0；
-          0x00, 0x00, 0x00, 0x01, // reserved(2) + data_reference_index(2)
-          0x00, 0x00, 0x00, 0x00, // reserved: 2 * 4 bytes 保留位
-          0x00, 0x00, 0x00, 0x00,
-          0x00, channelCount, // channelCount(2) 单声道还是双声道
-          0x00, 0x10, // sampleSize(2)
-          0x00, 0x00, 0x00, 0x00, // reserved(4) 4字节保留位
-          (sampleRate >>> 8) & 0xFF, // Audio sample rate 显然要右移16位才有意义	template unsigned int(32) samplerate = {timescale of media}<<16;
-          (sampleRate) & 0xFF,
-          0x00, 0x00
-      ]);
+    const data = new Uint8Array([
+        0x00, 0x00, 0x00, 0x00, // reserved(4) 6个字节，设置为0；
+        0x00, 0x00, 0x00, 0x01, // reserved(2) + data_reference_index(2)
+        0x00, 0x00, 0x00, 0x00, // reserved: 2 * 4 bytes 保留位
+        0x00, 0x00, 0x00, 0x00,
+        0x00, channelCount, // channelCount(2) 单声道还是双声道
+        0x00, 0x10, // sampleSize(2)
+        0x00, 0x00, 0x00, 0x00, // reserved(4) 4字节保留位
+        (sampleRate >>> 8) & 0xFF, // Audio sample rate 显然要右移16位才有意义	template unsigned int(32) samplerate = {timescale of media}<<16;
+        (sampleRate) & 0xFF,
+        0x00, 0x00
+    ]);
 
-      return MP4.box(MP4.types.mp4a, data, MP4.esds(meta));
+    return MP4.box(MP4.types.mp4a, data, MP4.esds(meta));
   }
 
   static esds(meta) {
@@ -522,6 +522,7 @@ class MP4 {
   }
 
   static mdat(data) {
+    console.log(data);
       return MP4.box(MP4.types.mdat, data);
   }
 

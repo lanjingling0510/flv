@@ -39,6 +39,7 @@ class Transmuxer extends EventEmitter {
 
     if (demux._hasAudio && !demux._hasVideo) {
       this._metaSucc();
+      return;
     }
 
     if (
@@ -60,6 +61,7 @@ class Transmuxer extends EventEmitter {
 
     if (!demux._hasAudio && demux._hasVideo) {
       this._metaSucc();
+      return;
     }
 
     if (

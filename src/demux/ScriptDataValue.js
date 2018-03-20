@@ -120,23 +120,30 @@ class ScriptDataValue {
 
   toJSON() {
     let value = this.value;
-    if (Object.prototype.toString.call(value) == '[object Array]') {
+    const TYPES = ScriptDataValue.TYPES;
+
+    // ECMA_ARRAY
+    if (this.type === TYPES.ECMA_ARRAY) {
       value = value.map(v => {
         return v && v.toJSON ? v.toJSON() : v;
       });
-    } else if (value && value.toJSON) {
+      value = Object.assign({}, ...value);
+      return value;
+    }
+
+    // STRICT_ARRAY
+    if (this.type === TYPES.STRICT_ARRAY) {
+      return value.map(v => {
+        return v && v.toJSON ? v.toJSON() : v;
+      });
+    }
+
+    // Other Type
+    if (value && value.toJSON) {
       return value.toJSON();
     }
 
-    let terminator = this.terminator;
-    terminator = terminator && terminator.toJSON ? terminator.toJSON() : null;
-
-    return {
-      type: this.type,
-      ECMAArrayLength: this.ECMAArrayLength,
-      value: value,
-      terminator: terminator
-    };
+    return value;
   }
 }
 

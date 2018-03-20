@@ -26,8 +26,7 @@ class ScriptDataVar {
     varData = varData && varData.toJSON ? varData.toJSON() : null;
 
     return {
-      objectName: varName,
-      objectData: varData
+      [varName]: varData
     };
   }
 }

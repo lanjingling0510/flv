@@ -32,11 +32,7 @@ class ScriptDataDate {
   }
 
   toJSON() {
-    return {
-      type: ScriptDataDate.TYPE,
-      dateTime: this.dateTime,
-      localDateTimeOffset: this.localDateTimeOffset
-    };
+    return this.dateTime;
   }
 }
 

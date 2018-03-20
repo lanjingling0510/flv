@@ -28,11 +28,7 @@ class ScriptDataLongString {
   }
 
   toJSON() {
-    return {
-      type: ScriptDataLongString.TYPE,
-      length: this.length,
-      data: this.data
-    };
+    return this.data;
   }
 }
 

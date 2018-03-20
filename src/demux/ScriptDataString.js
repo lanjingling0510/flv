@@ -34,11 +34,7 @@ class ScriptDataString {
   }
 
   toJSON() {
-    return {
-      type: ScriptDataString.TYPE,
-      length: this.length,
-      data: this.data
-    };
+    return this.data;
   }
 }
 

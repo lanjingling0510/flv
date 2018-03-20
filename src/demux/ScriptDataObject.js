@@ -31,9 +31,7 @@ class ScriptDataObject {
     objectData = objectData && objectData.toJSON ? objectData.toJSON() : null;
 
     return {
-      type: ScriptDataObject.TYPE,
-      objectName,
-      objectData
+      [objectName]: objectData
     };
   }
 }

@@ -127,7 +127,7 @@ class DemuxController extends EventEmitter {
    * 解析DataTag
    */
   _parseDataTag(tag) {
-    const scriptData = this._parseScriptData(tag.data);
+    const scriptData = tag.data;
 
     if (scriptData.hasOwnProperty('onMetaData')) {
       if (this._metadata) {
@@ -633,48 +633,6 @@ class DemuxController extends EventEmitter {
     }
 
     this.emit('videoMeta', meta);
-  }
-
-  /**
-   * 解析ScriptData
-   */
-  _parseScriptData(tagData) {
-    const data = {};
-
-    tagData.forEach(item => {
-      const value = (data[item.objectName.data] = {});
-      this._parseScriptDataObject(item.objectData, value);
-    });
-
-    return data;
-  }
-
-  /**
-   * 解析ScriptDataObject
-   */
-  _parseScriptDataObject(scriptData, data) {
-    // ScriptDataVar 类型
-    if (~[8, 10].indexOf(scriptData.type)) {
-      for (let i = 0; i < scriptData.value.length; i++) {
-        const objectObject = scriptData.value[i];
-        const objectValue = objectObject.objectData;
-        const objectName = objectObject.objectName;
-        data[objectName.data] = this._parseScriptDataObject(objectValue, data);
-      }
-    } else if (scriptData.type === 3) {
-      // ScriptDataObject 类型
-      const objectName = scriptData.objectName;
-      const value = (data[objectName.data] = {});
-      this._parseScriptDataObject(scriptData.objectData, value);
-    } else if (~[2, 23].indexOf(scriptData.type)) {
-      // ScriptDataString 类型
-      return scriptData.data;
-    } else if (scriptData.type === 3) {
-      // ScirptDataeDate 类型
-      return scriptData.dateTime;
-    } else {
-      return scriptData.value;
-    }
   }
 
   /**

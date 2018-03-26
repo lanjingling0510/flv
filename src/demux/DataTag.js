@@ -43,7 +43,7 @@ class DataTag  {
       return v && v.toJSON ? v.toJSON() : v;
     });
 
-    return objects;
+    return Object.assign({}, ...objects);
   }
 }
 

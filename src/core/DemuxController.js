@@ -191,15 +191,17 @@ class DemuxController extends EventEmitter {
         }
       }
 
-      if (typeof onMetaData.keyframes === 'object') {
-        // keyframes
+      if (typeof onMetaData.keyframes === 'object') {  // keyframes
         this._mediaInfo.hasKeyframesIndex = true;
-        const keyframes = onMetaData.keyframes;
-        keyframes.times = onMetaData.times;
-        keyframes.filepositions = onMetaData.filepositions;
-        this._mediaInfo.keyframesIndex = this._parseKeyframesIndex(keyframes);
-        // keyframes has been extracted, remove it
-        onMetaData.keyframes = null;
+
+        let keyframes = onMetaData.keyframes;
+        keyframes.times = keyframes.times || onMetaData.time;
+        keyframes.filepositions = keyframes.filepositions || onMetaData.filepositions;
+
+        if (keyframes.times && keyframes.filepositions) {
+          this._mediaInfo.keyframesIndex = this._parseKeyframesIndex(keyframes);
+          onMetaData.keyframes = null;  // keyframes has been extracted, remove it
+        }
       } else {
         this._mediaInfo.hasKeyframesIndex = false;
       }

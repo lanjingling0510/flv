@@ -56,11 +56,12 @@ class ScriptDataValue {
         buffer = this.value.decode(buffer);
         break;
       case TYPES.OBJECT:
+        this.value = [];
         this.terminator = new ScriptDataObjectEnd();
         for (;;) {
-          this.value = new ScriptDataObject(true);
-          buffer = this.value.decode(buffer);
-
+          let item = new ScriptDataObject(true);
+          buffer = item.decode(buffer);
+          this.value.push(item);
           buffer = this.terminator.decode(buffer);
           if (this.terminator.ended) {
             break;
@@ -123,7 +124,7 @@ class ScriptDataValue {
     const TYPES = ScriptDataValue.TYPES;
 
     // ECMA_ARRAY
-    if (this.type === TYPES.ECMA_ARRAY) {
+    if (this.type === TYPES.ECMA_ARRAY || this.type === TYPES.OBJECT) {
       value = value.map(v => {
         return v && v.toJSON ? v.toJSON() : v;
       });

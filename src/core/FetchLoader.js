@@ -1,4 +1,5 @@
 import EventEmitter from '../utils/EventEmitter';
+import Buffer from '../utils/Buffer';
 
 const Status = {
   Idle: 0,
@@ -16,6 +17,7 @@ class FetchLoader extends EventEmitter {
     this._receivedLength = 0;
     this._status = Status.Idle;
     this.requestAbort = false;
+    this._cacheBufferList = [];
   }
 
   open(url) {
@@ -55,6 +57,13 @@ class FetchLoader extends EventEmitter {
       .then(result => {
         if (result.done) {
           this._status = Status.Complete;
+          // const buffer = {
+          //   chunk: Buffer.concat(...this._cacheBufferList),
+          //   byteStart: 0,
+          //   byteLength: this._receivedLength
+          // };
+
+          // this.emit('dataArrival', buffer);
         } else {
           if (this.requestAbort === true) {
             this.requestAbort = false;
@@ -64,7 +73,7 @@ class FetchLoader extends EventEmitter {
           let chunk = result.value.buffer;
           let byteStart = this._receivedLength;
           this._receivedLength += chunk.byteLength;
-
+          this._cacheBufferList.push(chunk);
           this.emit('dataArrival', {
             chunk: chunk,
             byteStart: byteStart,

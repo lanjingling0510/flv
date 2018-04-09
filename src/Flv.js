@@ -35,6 +35,7 @@ class Flv extends EventEmitter {
     });
 
     this.transmuxer.on('mediaSegment', segment => {
+      this.emit('mediaSegment', segment);
       mse.appendMediaSegment(segment);
     });
 

@@ -10,5 +10,16 @@
 </head>
 <body>
     <video id="video" class="video" width="500" height="300" autoplay></video>
+    <video id="video2" class="video" width="500" height="300" autoplay></video>
 </body>
+<script>
+    var videoElement = document.getElementById('video');
+
+    window.setInterval(function() {
+        var ms = getBufferLength(videoElement);
+        ms = parseInt(ms * 100) / 100;
+        __hack__horizonChart.draw(ms);
+        __hack__horizonChart_valueDom.innerHTML = 'buffer health:' + ms;
+    }, 100);
+</script>
 </html>

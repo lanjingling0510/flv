@@ -79,6 +79,10 @@ class Transmuxer extends EventEmitter {
   }
 
   onDataAvailable(audiotrack, videotrack) {
+    if (audiotrack.samples.length < 2 || videotrack.samples.length < 2) {
+      return;
+    }
+
     this._remuxController.remux(audiotrack, videotrack);
   }
 
